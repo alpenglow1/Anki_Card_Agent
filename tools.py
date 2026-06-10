@@ -135,11 +135,14 @@ async def create_anki_package_from_cards(args: Dict[str, Any]) -> Dict[str, Any]
     import html
 
     # --- Debug Logic: Save input to a local JSON file ---
+    import tempfile
+
     debug_suffix = str(uuid.uuid4())[:8]
     debug_filename = f"debug_{topic.replace(' ', '_')}_{debug_suffix}_input.json"
-    with open(debug_filename, "w", encoding="utf-8") as f:
+    debug_filepath = os.path.join(tempfile.gettempdir(), debug_filename)
+    with open(debug_filepath, "w", encoding="utf-8") as f:
         json.dump(args, f, ensure_ascii=False, indent=2)
-    print(f"DEBUG: Input data saved to {debug_filename}")
+    print(f"DEBUG: Input data saved to {debug_filepath}")
     # --------------------------------------------------
 
     # 鲁棒性处理：如果 LLM 传过来的是 JSON 字符串而不是列表对象，尝试解析它

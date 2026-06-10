@@ -42,7 +42,7 @@ async def run_anki_agent_generator(user_prompt: str, verbose: bool = False):
         mcp_servers={server_name: server},
         allowed_tools=allowed_tools,
         system_prompt=system_prompt,
-        model="glm-4.7"
+        model="glm-4.7",
     )
 
     try:

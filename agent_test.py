@@ -1,10 +1,10 @@
-import os, anyio
+import anyio
 from dotenv import load_dotenv
 from claude_agent_sdk import query, ClaudeAgentOptions, AssistantMessage, TextBlock
 
 
-
 load_dotenv()
+
 
 async def main():
     options = ClaudeAgentOptions(
@@ -16,5 +16,6 @@ async def main():
             for block in msg.content:
                 if isinstance(block, TextBlock):
                     print(block.text)
+
 
 anyio.run(main)

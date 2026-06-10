@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="title">Anki Generator Agent</title>
-    <script src="https://cdn.jsdelivr.net/npm/marked@17.0.1/lib/marked.umd.js" integrity="sha384-KwzR5her+zXi/Bzz4PVrBjkrjsBZy9adZtt3jA6Jgj3/hzPihRUV6HqMONpTe7Ll" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@17.0.1/lib/marked.umd.js"
+        integrity="sha384-KwzR5her+zXi/Bzz4PVrBjkrjsBZy9adZtt3jA6Jgj3/hzPihRUV6HqMONpTe7Ll"
+        crossorigin="anonymous"></script>
     <style>
         :root {
             --bg-color: #ffffff;
@@ -26,19 +29,46 @@
             line-height: 1.6;
             font-size: 14px;
         }
-        .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4 {
+
+        .markdown-content h1,
+        .markdown-content h2,
+        .markdown-content h3,
+        .markdown-content h4 {
             color: #e0e0e0;
             font-weight: 600;
             margin-top: 1em;
             margin-bottom: 0.5em;
             line-height: 1.3;
         }
-        .markdown-content h1 { font-size: 1.4em; border-bottom: 1px solid #444; padding-bottom: 0.3em; }
-        .markdown-content h2 { font-size: 1.25em; }
-        .markdown-content h3 { font-size: 1.1em; }
-        .markdown-content p { margin-bottom: 0.8em; }
-        .markdown-content ul, .markdown-content ol { padding-left: 1.5em; margin-bottom: 0.8em; }
-        .markdown-content li { margin-bottom: 0.3em; }
+
+        .markdown-content h1 {
+            font-size: 1.4em;
+            border-bottom: 1px solid #444;
+            padding-bottom: 0.3em;
+        }
+
+        .markdown-content h2 {
+            font-size: 1.25em;
+        }
+
+        .markdown-content h3 {
+            font-size: 1.1em;
+        }
+
+        .markdown-content p {
+            margin-bottom: 0.8em;
+        }
+
+        .markdown-content ul,
+        .markdown-content ol {
+            padding-left: 1.5em;
+            margin-bottom: 0.8em;
+        }
+
+        .markdown-content li {
+            margin-bottom: 0.3em;
+        }
+
         .markdown-content code {
             font-family: "Menlo", "Monaco", "Consolas", "Courier New", monospace;
             background-color: #333;
@@ -47,6 +77,7 @@
             font-size: 0.9em;
             color: #e6c07b;
         }
+
         .markdown-content pre {
             background-color: #282c34;
             padding: 12px;
@@ -54,32 +85,45 @@
             overflow-x: auto;
             margin-bottom: 1em;
         }
+
         .markdown-content pre code {
             background-color: transparent;
             padding: 0;
             color: #abb2bf;
             font-size: 0.9em;
         }
+
         .markdown-content blockquote {
             border-left: 3px solid #555;
             margin: 0 0 1em 0;
             padding-left: 1em;
             color: #999;
         }
-        .markdown-content a { color: #61afef; text-decoration: none; }
-        .markdown-content a:hover { text-decoration: underline; }
-        .markdown-content strong { color: #fff; }
+
+        .markdown-content a {
+            color: #61afef;
+            text-decoration: none;
+        }
+
+        .markdown-content a:hover {
+            text-decoration: underline;
+        }
+
+        .markdown-content strong {
+            color: #fff;
+        }
 
         /* Terminal Spinner */
         .spinner {
             display: inline-block;
             font-family: monospace;
-            color: #52c41a; /* Green to match active state */
+            color: #52c41a;
+            /* Green to match active state */
             font-weight: bold;
             margin-top: 10px;
             margin-bottom: 5px;
         }
-        
+
         /* ... existing styles ... */
 
         body {
@@ -111,7 +155,8 @@
             color: #666;
             border-radius: 4px;
             outline: none;
-            min-width: auto; /* Remove fixed width */
+            min-width: auto;
+            /* Remove fixed width */
             text-align: center;
             white-space: nowrap;
         }
@@ -157,10 +202,11 @@
         input[type="text"]:focus {
             border-color: var(--input-focus);
             background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
-        button, #downloadBtn {
+        button,
+        #downloadBtn {
             padding: 15px 25px;
             font-size: 16px;
             border: none;
@@ -177,8 +223,10 @@
         #generateBtn {
             background-color: var(--btn-primary-bg);
             color: var(--btn-primary-text);
-            min-width: 120px; /* Minimum width for better appearance */
-            padding: 15px 25px; /* Consistent padding */
+            min-width: 120px;
+            /* Minimum width for better appearance */
+            padding: 15px 25px;
+            /* Consistent padding */
         }
 
         #generateBtn:hover {
@@ -230,15 +278,19 @@
             color: var(--console-text);
             padding: 20px;
             border-radius: 8px;
-            height: 40vh; /* Use 40% of viewport height */
-            min-height: 200px; /* Minimum height */
-            max-height: 400px; /* Maximum height */
+            height: 40vh;
+            /* Use 40% of viewport height */
+            min-height: 200px;
+            /* Minimum height */
+            max-height: 400px;
+            /* Maximum height */
             overflow-y: auto;
             font-family: "Menlo", "Monaco", "Consolas", "Courier New", monospace;
             font-size: 14px;
             line-height: 1.5;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-            display: none; /* Hidden by default */
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: none;
+            /* Hidden by default */
             flex-direction: column;
         }
 
@@ -246,20 +298,23 @@
             margin-bottom: 5px;
             word-wrap: break-word;
         }
-        
+
         .log-entry.tool {
-            color: #8fa3bf; /* Muted blue-ish grey for tools */
+            color: #8fa3bf;
+            /* Muted blue-ish grey for tools */
         }
-        
+
         .log-entry.claude {
-            color: #a8d1a8; /* Muted green for AI */
+            color: #a8d1a8;
+            /* Muted green for AI */
         }
-        
+
         .log-entry.usage {
-            color: #d1b88a; /* Soft gold/brown for usage info */
+            color: #d1b88a;
+            /* Soft gold/brown for usage info */
             font-style: italic;
         }
-        
+
         .log-entry.error {
             color: #e06c75;
         }
@@ -294,7 +349,8 @@
         .action-area {
             display: flex;
             gap: 12px;
-            justify-content: space-between; /* Space out buttons to ends */
+            justify-content: space-between;
+            /* Space out buttons to ends */
             align-items: center;
             opacity: 0;
             transition: opacity 0.5s ease-in;
@@ -305,12 +361,16 @@
         }
 
         #downloadBtn {
-            background-color: #222; /* Darker black */
+            background-color: #222;
+            /* Darker black */
             color: #fff;
-            width: 120px; /* Fixed width */
-            padding: 15px 20px; /* Adjusted padding */
+            width: 120px;
+            /* Fixed width */
+            padding: 15px 20px;
+            /* Adjusted padding */
             text-align: center;
-            box-sizing: border-box; /* Ensure consistent box sizing */
+            box-sizing: border-box;
+            /* Ensure consistent box sizing */
         }
 
         #downloadBtn:hover {
@@ -321,8 +381,10 @@
         #newBtn {
             background-color: var(--btn-secondary-bg);
             color: var(--btn-secondary-text);
-            width: 120px; /* Fixed width */
-            padding: 15px 20px; /* Adjusted padding */
+            width: 120px;
+            /* Fixed width */
+            padding: 15px 20px;
+            /* Adjusted padding */
             text-align: center;
         }
 
@@ -330,31 +392,39 @@
             background-color: var(--btn-secondary-hover);
         }
 
-  
+
         /* Mobile adjustments */
         @media (max-width: 600px) {
             .container {
                 width: 95%;
                 margin-top: 15px;
             }
+
             .input-group {
                 flex-direction: column;
             }
+
             #generateBtn {
                 width: 100%;
             }
+
             .action-area {
                 flex-direction: row;
                 gap: 10px;
                 justify-content: space-between;
             }
-            #downloadBtn, #newBtn {
+
+            #downloadBtn,
+            #newBtn {
                 flex: 1;
                 max-width: none;
                 text-align: center;
-                padding: 12px 15px; /* Adjusted padding for mobile */
-                width: auto; /* Keep auto width on mobile */
+                padding: 12px 15px;
+                /* Adjusted padding for mobile */
+                width: auto;
+                /* Keep auto width on mobile */
             }
+
             /* Language switch adjustments for mobile */
             .lang-switch {
                 position: absolute;
@@ -362,28 +432,40 @@
                 right: 10px;
                 gap: 5px;
             }
+
             .lang-btn {
                 padding: 3px 6px;
                 font-size: 11px;
                 min-width: auto;
             }
+
             input[type="text"]::placeholder {
                 font-size: 14px;
             }
+
             #logArea {
-                height: 30vh; /* Much smaller than desktop (40vh) to make room for buttons */
-                min-height: 120px; /* Even smaller minimum height */
-                max-height: 250px; /* Smaller maximum height */
-                font-size: 13px; /* Slightly smaller font */
-                padding: 15px; /* Reduce padding from 20px */
+                height: 30vh;
+                /* Much smaller than desktop (40vh) to make room for buttons */
+                min-height: 120px;
+                /* Even smaller minimum height */
+                max-height: 250px;
+                /* Smaller maximum height */
+                font-size: 13px;
+                /* Slightly smaller font */
+                padding: 15px;
+                /* Reduce padding from 20px */
             }
+
             footer {
-                padding: 15px 0; /* Smaller padding on mobile */
-                font-size: 11px; /* Smaller font on mobile */
+                padding: 15px 0;
+                /* Smaller padding on mobile */
+                font-size: 11px;
+                /* Smaller font on mobile */
             }
         }
     </style>
 </head>
+
 <body>
 
     <div class="lang-switch">
@@ -393,7 +475,7 @@
 
     <div class="container">
         <h1 data-i18n="title">Anki Generator Agent</h1>
-        
+
         <div class="input-group">
             <input type="text" id="topicInput" placeholder="Enter a topic" autocomplete="off">
             <button id="generateBtn" data-i18n="generate">Generate</button>
@@ -447,7 +529,7 @@
         const translations = {
             en: {
                 title: "Anki Generator Agent",
-                placeholder: "Enter a topic (e.g., 'MySQL Interview', 'High School Geography', 'Investment Basics')...",
+                placeholder: "Enter a topic",
                 generate: "Generate",
                 new: "New",
                 download: "Download",
@@ -486,7 +568,7 @@
                     btn.classList.add('active');
                 }
             });
-            
+
             // Re-render buttons/messages text if visible
             if (downloadBtn.style.display !== 'none') {
                 downloadBtn.textContent = translations[lang].download;
@@ -504,12 +586,12 @@
         function showSpinner() {
             // Remove existing if any
             hideSpinner();
-            
+
             const spinnerDiv = document.createElement('div');
             spinnerDiv.id = 'loadingSpinner';
             spinnerDiv.className = 'spinner';
             spinnerDiv.textContent = '> Processing... ';
-            
+
             logArea.appendChild(spinnerDiv);
             logArea.scrollTop = logArea.scrollHeight;
 
@@ -540,10 +622,10 @@
             progressBar.style.background = '#52c41a';
             timerLabel.textContent = '0.0s';
             timerLabel.style.color = '#555';
-            
+
             if (timerInterval) clearInterval(timerInterval);
             timerInterval = setInterval(updateTimer, 50); // Faster update for smoother animation
-            
+
             showSpinner();
         }
 
@@ -556,7 +638,7 @@
             // Force color back to solid green on completion
             progressBar.style.background = '#52c41a';
             timerLabel.style.color = '#52c41a';
-            
+
             // If server provided precise time, use it
             if (finalElapsedTime !== undefined) {
                 timerLabel.textContent = finalElapsedTime.toFixed(1) + 's';
@@ -571,7 +653,7 @@
         function updateTimer() {
             const now = Date.now();
             const elapsedSeconds = (now - startTime) / 1000;
-            
+
             timerLabel.textContent = elapsedSeconds.toFixed(1) + 's';
 
             // Progress bar logic
@@ -589,38 +671,38 @@
             } else {
                 // Marquee effect
                 // Cycle duration: 2 seconds to cross the bar
-                const cycleDuration = 2.0; 
+                const cycleDuration = 2.0;
                 const phase = (elapsedSeconds % cycleDuration) / cycleDuration; // 0.0 -> 1.0
-                
+
                 // Calculate position of the red pulse center (from -20% to 120% to fully clear edges)
                 const center = (phase * 140) - 20;
-                
+
                 // Define gradient stops for the red pulse
                 // Structure: Green ... [Green -> Red -> Green] ... Green
                 const spread = 15; // Width of the pulse
                 const stop1 = center - spread;
                 const stop2 = center;
                 const stop3 = center + spread;
-                
+
                 // Use linear-gradient to draw the frame
                 progressBar.style.background = `linear-gradient(90deg, #52c41a ${stop1}%, #f5222d ${stop2}%, #52c41a ${stop3}%)`;
-                
+
                 timerLabel.style.color = '#f5222d';
             }
         }
 
-        function appendLog(message, type='normal') {
+        function appendLog(message, type = 'normal') {
             const div = document.createElement('div');
             div.className = 'log-entry ' + type;
             div.textContent = message;
             logArea.appendChild(div);
-            
+
             // Ensure spinner stays at the bottom
             const spinner = document.getElementById('loadingSpinner');
             if (spinner) {
                 logArea.appendChild(spinner);
             }
-            
+
             logArea.scrollTop = logArea.scrollHeight;
         }
 
@@ -629,219 +711,219 @@
             ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
 
             function renderToolInput(toolName, input) {
-            let html = '';
-            
-            // Helper to render a list of items in a "CLI/Terminal" style
-            const renderList = (items, label) => {
-                const listId = 'list-' + Math.random().toString(36).substr(2, 9);
-                let listHtml = `<div style="margin-top:8px; margin-bottom: 8px; font-family: 'Menlo', 'Monaco', monospace; border-left: 2px solid #444; padding-left: 12px;">`;
-                if (label) {
-                    listHtml += `<div style="color: #888; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px;">// ${label} (${items.length})</div>`;
-                }
-                
-                const renderItem = (item, idx) => {
-                    let content = '';
-                    let status = 'pending';
-                    let isCard = false;
+                let html = '';
 
-                    if (typeof item === 'string') {
-                        content = item;
-                    } else if (typeof item === 'object') {
-                        if (item.status) status = item.status;
-                        if (item.model_type) isCard = true;
+                // Helper to render a list of items in a "CLI/Terminal" style
+                const renderList = (items, label) => {
+                    const listId = 'list-' + Math.random().toString(36).substr(2, 9);
+                    let listHtml = `<div style="margin-top:8px; margin-bottom: 8px; font-family: 'Menlo', 'Monaco', monospace; border-left: 2px solid #444; padding-left: 12px;">`;
+                    if (label) {
+                        listHtml += `<div style="color: #888; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px;">// ${label} (${items.length})</div>`;
+                    }
 
-                        if (item.content) {
-                            let display = item.content;
-                            if (item.model_type === 'qa') {
-                                let parts = display.split('||');
-                                if (parts.length > 1) {
-                                    display = `<span style="color: #aaa;">Q:</span> ${parts[0].trim()}<br><span style="padding-left:24px; color: #aaa;">A:</span> <span style="color: #a8d1a8;">${parts[1].trim()}</span>`;
+                    const renderItem = (item, idx) => {
+                        let content = '';
+                        let status = 'pending';
+                        let isCard = false;
+
+                        if (typeof item === 'string') {
+                            content = item;
+                        } else if (typeof item === 'object') {
+                            if (item.status) status = item.status;
+                            if (item.model_type) isCard = true;
+
+                            if (item.content) {
+                                let display = item.content;
+                                if (item.model_type === 'qa') {
+                                    let parts = display.split('||');
+                                    if (parts.length > 1) {
+                                        display = `<span style="color: #aaa;">Q:</span> ${parts[0].trim()}<br><span style="padding-left:24px; color: #aaa;">A:</span> <span style="color: #a8d1a8;">${parts[1].trim()}</span>`;
+                                    }
                                 }
+                                const typeTag = item.model_type ? `<span style="color: #666; font-size: 0.8em;">(${item.model_type})</span> ` : '';
+                                content = `${typeTag}${display}`;
+                            } else {
+                                content = item.task || item.title || item.step || item.description || item.message || JSON.stringify(item);
                             }
-                            const typeTag = item.model_type ? `<span style="color: #666; font-size: 0.8em;">(${item.model_type})</span> ` : '';
-                            content = `${typeTag}${display}`;
-                        } else {
-                            content = item.task || item.title || item.step || item.description || item.message || JSON.stringify(item);
                         }
-                    }
-                    
-                    // Marker Logic: No marker for cards
-                    let markerHtml = '';
-                    if (!isCard) {
-                        let marker = '<span style="color: #666;">[ ]</span>';
-                        const s = String(status).toLowerCase();
-                        if (['completed', 'done', 'success', 'finished', 'complete'].includes(s)) {
-                            marker = '<span style="color: #52c41a; font-weight:bold;">[√]</span>';
-                        } else if (['in_progress', 'running', 'doing', 'active', 'processing'].includes(s)) {
-                            marker = '<span style="color: #1890ff; font-weight:bold;">[>]</span>';
-                        } else if (['failed', 'error'].includes(s)) {
-                            marker = '<span style="color: #f5222d; font-weight:bold;">[x]</span>';
-                        } else if (['skipped', 'ignored'].includes(s)) {
-                            marker = '<span style="color: #777;">[-]</span>';
+
+                        // Marker Logic: No marker for cards
+                        let markerHtml = '';
+                        if (!isCard) {
+                            let marker = '<span style="color: #666;">[ ]</span>';
+                            const s = String(status).toLowerCase();
+                            if (['completed', 'done', 'success', 'finished', 'complete'].includes(s)) {
+                                marker = '<span style="color: #52c41a; font-weight:bold;">[√]</span>';
+                            } else if (['in_progress', 'running', 'doing', 'active', 'processing'].includes(s)) {
+                                marker = '<span style="color: #1890ff; font-weight:bold;">[>]</span>';
+                            } else if (['failed', 'error'].includes(s)) {
+                                marker = '<span style="color: #f5222d; font-weight:bold;">[x]</span>';
+                            } else if (['skipped', 'ignored'].includes(s)) {
+                                marker = '<span style="color: #777;">[-]</span>';
+                            }
+                            markerHtml = `<span style="margin-right: 10px; flex-shrink: 0; font-family: monospace;">${marker}</span>`;
                         }
-                        markerHtml = `<span style="margin-right: 10px; flex-shrink: 0; font-family: monospace;">${marker}</span>`;
-                    }
-                    
-                    return `<div style="margin-bottom: 6px; padding: 6px 8px; background: #2b2b2b; border: 1px solid #333; border-radius: 4px; line-height: 1.4; display: flex; align-items: flex-start; font-size: 0.9em; box-shadow: 0 1px 2px rgba(0,0,0,0.2);">
+
+                        return `<div style="margin-bottom: 6px; padding: 6px 8px; background: #2b2b2b; border: 1px solid #333; border-radius: 4px; line-height: 1.4; display: flex; align-items: flex-start; font-size: 0.9em; box-shadow: 0 1px 2px rgba(0,0,0,0.2);">
                         ${markerHtml}
                         <div style="word-break: break-word; flex: 1;">${content}</div>
                     </div>`;
+                    };
+
+                    if (items.length <= 8) {
+                        // Render all items
+                        items.forEach((item, idx) => {
+                            listHtml += renderItem(item, idx);
+                        });
+                    } else {
+                        // Render First 3
+                        for (let i = 0; i < 3; i++) {
+                            listHtml += renderItem(items[i], i);
+                        }
+
+                        // Hidden Middle Section
+                        const hiddenCount = items.length - 5; // Total - (3 + 2)
+                        listHtml += `<div id="${listId}" style="display:none;">`;
+                        for (let i = 3; i < items.length - 2; i++) {
+                            listHtml += renderItem(items[i], i);
+                        }
+                        listHtml += `</div>`;
+
+                        // Expand Button
+                        listHtml += `<div id="btn-${listId}" onclick="document.getElementById('${listId}').style.display='block'; document.getElementById('btn-${listId}').style.display='none';" style="cursor: pointer; color: #666; font-size: 0.85em; padding: 4px 8px; margin-bottom: 6px; text-align: center; border: 1px dashed #444; border-radius: 4px;">... ${hiddenCount} more items (click to expand) ...</div>`;
+
+                        // Last 2
+                        for (let i = items.length - 2; i < items.length; i++) {
+                            listHtml += renderItem(items[i], i);
+                        }
+                    }
+
+                    listHtml += '</div>';
+                    return listHtml;
                 };
 
-                if (items.length <= 8) {
-                    // Render all items
-                    items.forEach((item, idx) => {
-                        listHtml += renderItem(item, idx);
-                    });
-                } else {
-                    // Render First 3
-                    for (let i = 0; i < 3; i++) {
-                        listHtml += renderItem(items[i], i);
+                // 1. Handle create_anki_package_from_cards specifically
+                if (toolName.includes('create_anki_package_from_cards')) {
+                    let cards = input.cards;
+                    if (typeof cards === 'string') {
+                        try { cards = JSON.parse(cards); } catch (e) { }
                     }
 
-                    // Hidden Middle Section
-                    const hiddenCount = items.length - 5; // Total - (3 + 2)
-                    listHtml += `<div id="${listId}" style="display:none;">`;
-                    for (let i = 3; i < items.length - 2; i++) {
-                        listHtml += renderItem(items[i], i);
+                    if (Array.isArray(cards)) {
+                        html += renderList(cards, 'Flashcards Pipeline');
                     }
-                    listHtml += `</div>`;
 
-                    // Expand Button
-                    listHtml += `<div id="btn-${listId}" onclick="document.getElementById('${listId}').style.display='block'; document.getElementById('btn-${listId}').style.display='none';" style="cursor: pointer; color: #666; font-size: 0.85em; padding: 4px 8px; margin-bottom: 6px; text-align: center; border: 1px dashed #444; border-radius: 4px;">... ${hiddenCount} more items (click to expand) ...</div>`;
+                    if (input.topic) {
+                        html += `<div style="margin-top:4px; font-size: 0.9em; color: #888;">Topic: <span style="color: #ccc;">${input.topic}</span></div>`;
+                    }
+                    return html;
+                }
 
-                    // Last 2
-                    for (let i = items.length - 2; i < items.length; i++) {
-                        listHtml += renderItem(items[i], i);
+                // 2. Generic handling for other list-like params (todos, items, tasks)
+                for (const [key, value] of Object.entries(input)) {
+                    if ((key === 'todos' || key === 'items' || key === 'tasks' || key === 'steps' || key === 'cards') && Array.isArray(value)) {
+                        html += renderList(value, key);
+                    } else if (Array.isArray(value)) {
+                        html += renderList(value, key);
+                    } else {
+                        let displayValue = value;
+                        if (typeof value === 'object') displayValue = JSON.stringify(value);
+                        html += `<div style="font-size: 0.9em; margin-top: 2px;"><span style="color: #666;">${key}:</span> <span style="color: #bbb;">${displayValue}</span></div>`;
                     }
                 }
 
-                listHtml += '</div>';
-                return listHtml;
-            };
-
-            // 1. Handle create_anki_package_from_cards specifically
-            if (toolName.includes('create_anki_package_from_cards')) {
-                let cards = input.cards;
-                if (typeof cards === 'string') {
-                    try { cards = JSON.parse(cards); } catch(e) {}
-                }
-                
-                if (Array.isArray(cards)) {
-                    html += renderList(cards, 'Flashcards Pipeline');
-                }
-                
-                if (input.topic) {
-                    html += `<div style="margin-top:4px; font-size: 0.9em; color: #888;">Topic: <span style="color: #ccc;">${input.topic}</span></div>`;
-                }
                 return html;
             }
 
-            // 2. Generic handling for other list-like params (todos, items, tasks)
-            for (const [key, value] of Object.entries(input)) {
-                if ((key === 'todos' || key === 'items' || key === 'tasks' || key === 'steps' || key === 'cards') && Array.isArray(value)) {
-                    html += renderList(value, key);
-                } else if (Array.isArray(value)) {
-                    html += renderList(value, key);
-                } else {
-                    let displayValue = value;
-                    if (typeof value === 'object') displayValue = JSON.stringify(value);
-                    html += `<div style="font-size: 0.9em; margin-top: 2px;"><span style="color: #666;">${key}:</span> <span style="color: #bbb;">${displayValue}</span></div>`;
+            function ensureSpinnerAtBottom() {
+                const spinner = document.getElementById('loadingSpinner');
+                if (spinner) {
+                    logArea.appendChild(spinner);
                 }
+                logArea.scrollTop = logArea.scrollHeight;
             }
 
-            return html;
-        }
+            ws.onmessage = function (event) {
+                const data = JSON.parse(event.data);
 
-        function ensureSpinnerAtBottom() {
-            const spinner = document.getElementById('loadingSpinner');
-            if (spinner) {
-                logArea.appendChild(spinner);
-            }
-            logArea.scrollTop = logArea.scrollHeight;
-        }
-
-        ws.onmessage = function(event) {
-            const data = JSON.parse(event.data);
-            
-            if (data.type === 'start') {
-                logArea.innerHTML = '';
-                appendLog(translations[currentLang].started, 'normal');
-                startTimer();
-            } 
-            else if (data.type === 'log') {
-                appendLog(data.message, 'normal');
-            }
-            else if (data.type === 'assistant_message') {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'log-entry claude';
-                
-                // Label
-                const label = document.createElement('div');
-                label.textContent = '🤖 Claude';
-                label.style.fontWeight = 'bold';
-                label.style.marginBottom = '6px';
-                label.style.opacity = '0.8';
-                
-                // Content
-                const contentDiv = document.createElement('div');
-                contentDiv.className = 'markdown-content';
-                try {
-                    contentDiv.innerHTML = marked.parse(data.content);
-                } catch (e) {
-                    console.error('Markdown parse error:', e);
-                    contentDiv.textContent = data.content; // Fallback to plain text
+                if (data.type === 'start') {
+                    logArea.innerHTML = '';
+                    appendLog(translations[currentLang].started, 'normal');
+                    startTimer();
                 }
-                
-                wrapper.appendChild(label);
-                wrapper.appendChild(contentDiv);
-                
-                logArea.appendChild(wrapper);
-                ensureSpinnerAtBottom();
-            }
-            else if (data.type === 'tool_use') {
-                const toolDiv = document.createElement('div');
-                toolDiv.className = 'log-entry tool';
-                // Remove prefix mcp__...__ if present for display
-                const displayName = data.name.split('__').pop();
-                
-                toolDiv.innerHTML = `<div style="margin-bottom:5px;">🛠️ <strong>Executing: ${displayName}</strong></div>` + renderToolInput(data.name, data.input);
-                logArea.appendChild(toolDiv);
-                ensureSpinnerAtBottom();
-            }
-            else if (data.type === 'usage') {
-                // Compact usage stats
-                if (data.usage) {
-                    const u = data.usage;
-                    const info = `In: ${u.input_tokens} | Out: ${u.output_tokens}`;
-                    appendLog(`📊 Stats: ${info}`, 'usage');
+                else if (data.type === 'log') {
+                    appendLog(data.message, 'normal');
                 }
-            }
-            else if (data.type === 'cost') {
-                appendLog(`💰 Cost: $${data.cost.toFixed(4)}`, 'usage');
-            }
-            else if (data.type === 'completion') {
-                // Task done from Core perspective
-                appendLog(data.message, 'normal');
-            }
-            else if (data.type === 'complete') {
-                // File generation done from Web perspective
-                stopTimer(data.elapsed_time);
-                showDownload(data.session_id, data.filename);
-            }
-            else if (data.type === 'error') {
-                stopTimer();
-                appendLog(translations[currentLang].error + data.message, 'error');
-                generateBtn.disabled = false;
-            }
-            else if (data.type === 'cancelled') {
-                 stopTimer();
-                 appendLog("⚠️ " + data.message, 'error');
-                 generateBtn.disabled = false;
-            }
-        };
+                else if (data.type === 'assistant_message') {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'log-entry claude';
 
-            ws.onclose = function() {
+                    // Label
+                    const label = document.createElement('div');
+                    label.textContent = '🤖 Claude';
+                    label.style.fontWeight = 'bold';
+                    label.style.marginBottom = '6px';
+                    label.style.opacity = '0.8';
+
+                    // Content
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'markdown-content';
+                    try {
+                        contentDiv.innerHTML = marked.parse(data.content);
+                    } catch (e) {
+                        console.error('Markdown parse error:', e);
+                        contentDiv.textContent = data.content; // Fallback to plain text
+                    }
+
+                    wrapper.appendChild(label);
+                    wrapper.appendChild(contentDiv);
+
+                    logArea.appendChild(wrapper);
+                    ensureSpinnerAtBottom();
+                }
+                else if (data.type === 'tool_use') {
+                    const toolDiv = document.createElement('div');
+                    toolDiv.className = 'log-entry tool';
+                    // Remove prefix mcp__...__ if present for display
+                    const displayName = data.name.split('__').pop();
+
+                    toolDiv.innerHTML = `<div style="margin-bottom:5px;">🛠️ <strong>Executing: ${displayName}</strong></div>` + renderToolInput(data.name, data.input);
+                    logArea.appendChild(toolDiv);
+                    ensureSpinnerAtBottom();
+                }
+                else if (data.type === 'usage') {
+                    // Compact usage stats
+                    if (data.usage) {
+                        const u = data.usage;
+                        const info = `In: ${u.input_tokens} | Out: ${u.output_tokens}`;
+                        appendLog(`📊 Stats: ${info}`, 'usage');
+                    }
+                }
+                else if (data.type === 'cost') {
+                    appendLog(`💰 Cost: $${data.cost.toFixed(4)}`, 'usage');
+                }
+                else if (data.type === 'completion') {
+                    // Task done from Core perspective
+                    appendLog(data.message, 'normal');
+                }
+                else if (data.type === 'complete') {
+                    // File generation done from Web perspective
+                    stopTimer(data.elapsed_time);
+                    showDownload(data.session_id, data.filename);
+                }
+                else if (data.type === 'error') {
+                    stopTimer();
+                    appendLog(translations[currentLang].error + data.message, 'error');
+                    generateBtn.disabled = false;
+                }
+                else if (data.type === 'cancelled') {
+                    stopTimer();
+                    appendLog("⚠️ " + data.message, 'error');
+                    generateBtn.disabled = false;
+                }
+            };
+
+            ws.onclose = function () {
                 // appendLog('Connection closed.', 'error');
                 if (timerInterval) stopTimer();
                 generateBtn.disabled = false;
@@ -882,7 +964,7 @@
                 downloadBtn.style.display = 'none';
             }
         });
-        
+
         // Enter key to submit
         topicInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
@@ -910,4 +992,5 @@
 
     </script>
 </body>
+
 </html>
