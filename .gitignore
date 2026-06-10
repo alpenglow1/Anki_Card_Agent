@@ -2,3 +2,19 @@
 __pycache__/
 *input.json
 *.log
+
+# 环境变量（含 API Key，绝对不能上传！）
+.env
+.env.local
+.env.*.local
+
+# Python 虚拟环境
+.venv/
+venv/
+
+# 生成的输出文件
+static/outputs/
+
+# IDE 配置
+.idea/
+.DS_Store
